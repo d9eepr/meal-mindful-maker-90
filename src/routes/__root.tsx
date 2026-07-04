@@ -77,14 +77,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "DayChef — AI cooking plan for your day" },
+      {
+        name: "description",
+        content:
+          "Personal AI meal planner: breakfast, lunch, dinner, grocery list, substitutions, and budget check based on your day.",
+      },
+      { property: "og:title", content: "DayChef — AI cooking plan for your day" },
+      {
+        property: "og:description",
+        content:
+          "Personal AI meal planner tailored to your schedule, pantry, and budget.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
