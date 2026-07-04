@@ -91,6 +91,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "DayChef — AI cooking plan for your day" },
+      { name: "description", content: "Tell DayChef about your day and get a personalized breakfast, lunch, and dinner plan with grocery list, substitutions, and budget check." },
+      { property: "og:description", content: "Tell DayChef about your day and get a personalized breakfast, lunch, and dinner plan with grocery list, substitutions, and budget check." },
+      { name: "twitter:description", content: "Tell DayChef about your day and get a personalized breakfast, lunch, and dinner plan with grocery list, substitutions, and budget check." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/754241f9-8a6d-41eb-8af8-f82bdb98c641" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/754241f9-8a6d-41eb-8af8-f82bdb98c641" },
     ],
     links: [
       {
