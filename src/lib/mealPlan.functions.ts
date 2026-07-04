@@ -89,23 +89,25 @@ Requirements:
 - Grocery list ONLY for items not in pantry. Group by category (produce, protein, dairy, pantry, other). Estimate reasonable per-item prices in ${data.currency}.
 - Provide 2-5 useful substitutions (allergy-safe, pantry-based, or cheaper).
 - Budget: sum estimated grocery prices into estimatedTotal. Verdict "under" if <= budget*0.9, "on" if within 10% of budget, "over" if > budget. If over, notes must suggest specific swaps to fit budget.
-- Keep everything realistic and concise.`;
+- Keep everything realistic and concise.
+
+Return ONLY a JSON object (no prose, no markdown fences) matching this shape:
+{"meals":{"breakfast":{"name":str,"prepMinutes":num,"steps":[str],"scheduleNote":str},"lunch":{...},"dinner":{...}},"grocery":[{"item":str,"qty":str,"category":str,"estPrice":num}],"substitutions":[{"original":str,"alternative":str,"reason":str}],"budget":{"estimatedTotal":num,"currency":str,"verdict":"under"|"on"|"over","notes":str}}`;
+
+    const { text } = await generateText({ model, prompt });
+
+    const cleaned = text
+      .replace(/```json\s*/gi, "")
+      .replace(/```\s*/g, "")
+      .trim();
+    const start = cleaned.search(/[{[]/);
+    const end = cleaned.lastIndexOf("}");
+    const jsonStr = start >= 0 && end > start ? cleaned.slice(start, end + 1) : cleaned;
 
     try {
-      const { output } = await generateText({
-        model,
-        output: Output.object({ schema: PlanSchema }),
-        prompt,
-      });
-      return output;
-    } catch (error) {
-      if (NoObjectGeneratedError.isInstance(error)) {
-        try {
-          return PlanSchema.parse(JSON.parse(error.text ?? "{}"));
-        } catch {
-          throw new Error("The AI response could not be parsed. Please try again.");
-        }
-      }
-      throw error;
+      return PlanSchema.parse(JSON.parse(jsonStr));
+    } catch (e) {
+      console.error("Meal plan parse failed. Raw text:", text);
+      throw new Error("The AI response could not be parsed. Please try again.");
     }
   });
